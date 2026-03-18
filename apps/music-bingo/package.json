@@ -14,7 +14,8 @@
 		"format": "prettier --write .",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run",
-		"gen": "wrangler types"
+		"gen": "wrangler types",
+		"generate:fonts": "bun run scripts/generate-font-list.ts"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^2.0.2",
@@ -32,6 +33,7 @@
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.14.0",
 		"globals": "^17.3.0",
+		"google-font-metadata": "^6.0.8",
 		"playwright": "^1.58.2",
 		"prettier": "^3.8.1",
 		"prettier-plugin-svelte": "^3.4.1",
@@ -47,6 +49,7 @@
 		"wrangler": "^4.63.0"
 	},
 	"dependencies": {
-		"papaparse": "^5.5.3"
+		"papaparse": "^5.5.3",
+		"pretty-print-browser": "workspace:*"
 	}
 }

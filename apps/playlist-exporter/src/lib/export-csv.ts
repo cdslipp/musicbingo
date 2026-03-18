@@ -8,8 +8,10 @@ function escapeCsvField(field: string): string {
 }
 
 export function exportCsv(playlist: PlaylistData): string {
+  const header = 'title,artist,album,duration_ms';
   const lines = playlist.tracks.map(
-    (t) => `${escapeCsvField(t.title)},${escapeCsvField(t.artist)}`,
+    (t) =>
+      `${escapeCsvField(t.title)},${escapeCsvField(t.artist)},${escapeCsvField(t.album ?? '')},${t.duration ?? ''}`,
   );
-  return lines.join('\n') + '\n';
+  return [header, ...lines].join('\n') + '\n';
 }

@@ -2,6 +2,7 @@ import type {
 	AppMode,
 	BingoCard,
 	GameSimulation,
+	PrintSize,
 	RoundConfig,
 	SimulationCard,
 	Song,
@@ -23,6 +24,7 @@ export const gameState = $state({
 	bingoTitle: 'Music Bingo',
 	selectedFont: 'Sans Serif' as string,
 	baseFontSize: 16,
+	printSize: 'full' as PrintSize,
 	mode: 'generate' as AppMode,
 	tournamentRounds: [
 		{ winCondition: 'row' },
@@ -40,10 +42,12 @@ export function getFontFamily(): string {
 	switch (gameState.selectedFont) {
 		case 'Serif':
 			return 'serif';
+		case 'Sans Serif':
+			return 'sans-serif';
 		case 'Monospace':
 			return '"American Typewriter", Courier, monospace';
 		default:
-			return 'sans-serif';
+			return `"${gameState.selectedFont}", sans-serif`;
 	}
 }
 

@@ -1,0 +1,13 @@
+{
+	"name": "pretty-print-browser",
+	"version": "0.0.1",
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts",
+		"./styles": "./src/print.css"
+	},
+	"files": ["src"],
+	"peerDependencies": {
+		"svelte": "^5.0.0"
+	}
+}

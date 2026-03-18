@@ -69,3 +69,5 @@ export interface GameSimulation {
 export type WinCondition = 'standard' | 'row' | 'four-corners' | 'full-card';
 
 export type AppMode = 'generate' | 'simulate';
+
+export type PrintSize = 'full' | 'half';

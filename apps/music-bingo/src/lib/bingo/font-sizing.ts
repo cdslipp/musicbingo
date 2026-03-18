@@ -1,8 +1,33 @@
 import type { FontSizeCategory, Song } from '../types.js';
 
+const TITLE_MAX = 30;
+const ARTIST_MAX = 25;
+
+export function truncateTitle(title: string): string {
+	if (title.length <= TITLE_MAX) return title;
+	const keep = TITLE_MAX - 3;
+	const front = Math.ceil(keep / 2);
+	const back = Math.floor(keep / 2);
+	return title.slice(0, front) + '...' + title.slice(-back);
+}
+
+export function truncateArtist(artist: string): string {
+	const parts = artist.split(',').map((p) => p.trim());
+	if (parts.length >= 3) {
+		return parts[0] + '...';
+	}
+	if (parts.length === 2 && artist.length > ARTIST_MAX) {
+		return parts[0] + '...';
+	}
+	if (artist.length > ARTIST_MAX) {
+		return artist.slice(0, ARTIST_MAX - 3) + '...';
+	}
+	return artist;
+}
+
 export function getDisplayText(song: Song): string {
-	if (song.artist) return `${song.title} - ${song.artist}`;
-	return song.title;
+	if (song.artist) return `${truncateTitle(song.title)} - ${truncateArtist(song.artist)}`;
+	return truncateTitle(song.title);
 }
 
 export function getFontSize(song: Song): FontSizeCategory {
