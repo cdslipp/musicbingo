@@ -11,8 +11,7 @@
 	import CardNavigator from '$lib/components/CardNavigator.svelte';
 	import CardUniquenessStatus from '$lib/components/CardUniquenessStatus.svelte';
 	import CsvUploader from '$lib/components/CsvUploader.svelte';
-	import SpotifyImporter from '$lib/components/SpotifyImporter.svelte';
-	import JsonPaster from '$lib/components/JsonPaster.svelte';
+import JsonPaster from '$lib/components/JsonPaster.svelte';
 	import FontControls from '$lib/components/FontControls.svelte';
 	import PrintReadyCards from '$lib/components/PrintReadyCards.svelte';
 	import TabSwitcher from '$lib/components/TabSwitcher.svelte';
@@ -124,7 +123,6 @@
 
 			<FontControls />
 			<CsvUploader />
-			<SpotifyImporter />
 			<JsonPaster />
 
 			{#if songCount > 0}
