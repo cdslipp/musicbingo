@@ -1,0 +1,3 @@
+[submodule "apps/playlist-exporter"]
+	path = apps/playlist-exporter
+	url = https://github.com/cdslipp/playlist-exporter.git
