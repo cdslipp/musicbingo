@@ -64,9 +64,13 @@ export function getCurrentWinCondition(): WinCondition {
 }
 
 // ── Actions ──
-export function loadCsv(csvText: string): void {
-	gameState.songs = parseCsv(csvText);
+export function loadSongs(songs: Song[]): void {
+	gameState.songs = songs;
 	regenerateCards();
+}
+
+export function loadCsv(csvText: string): void {
+	loadSongs(parseCsv(csvText));
 }
 
 export function regenerateCards(): void {
