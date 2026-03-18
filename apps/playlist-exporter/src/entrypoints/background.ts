@@ -1,11 +1,19 @@
 import type { PlaylistData, ContentMessage, PopupMessage } from '../lib/types';
 
+function badgeText(n: number, complete: boolean): string {
+  // For 3+ digit numbers, drop the ↓ arrow to keep badge readable
+  // (background color already shows green=complete vs amber=loading)
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
+  if (n >= 100) return String(n);
+  return complete ? String(n) : `${n}↓`;
+}
+
 function updateBadge(playlist: PlaylistData) {
   const have = playlist.tracks.length;
   const total = playlist.totalCount ?? have;
   const complete = have >= total;
 
-  chrome.action.setBadgeText({ text: complete ? String(have) : `${have}↓` });
+  chrome.action.setBadgeText({ text: badgeText(have, complete) });
   chrome.action.setBadgeBackgroundColor({ color: complete ? '#22c55e' : '#f59e0b' });
 }
 
@@ -39,11 +47,6 @@ export default defineBackground(() => {
         return true;
       }
 
-      if (message.type === 'CLEAR_PLAYLIST') {
-        chrome.storage.local.remove('playlist');
-        chrome.action.setBadgeText({ text: '' });
-        return false;
-      }
     },
   );
 });

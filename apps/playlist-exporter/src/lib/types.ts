@@ -20,6 +20,4 @@ export type ContentMessage =
   | { type: 'PLAYLIST_PAGE'; payload: { source: string; tracks: Track[] } };
 
 // Popup → background messages
-export type PopupMessage =
-  | { type: 'GET_PLAYLIST' }
-  | { type: 'CLEAR_PLAYLIST' };
+export type PopupMessage = { type: 'GET_PLAYLIST' };

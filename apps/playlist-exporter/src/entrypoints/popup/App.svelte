@@ -40,9 +40,19 @@
     download(exportCsv(playlist), `${slug}.csv`, 'text/csv');
   }
 
-  async function clearPlaylist() {
-    await browser.runtime.sendMessage({ type: 'CLEAR_PLAYLIST' });
-    playlist = null;
+  let copyLabel = $state('Copy JSON');
+
+  async function copyJson() {
+    if (!playlist) return;
+    const data = {
+      source: playlist.source,
+      title: playlist.title,
+      creator: playlist.creator,
+      tracks: playlist.tracks.map(({ title, artist, album }) => ({ title, artist, album }))
+    };
+    await navigator.clipboard.writeText(JSON.stringify(data, null, 2));
+    copyLabel = 'Copied!';
+    setTimeout(() => (copyLabel = 'Copy JSON'), 1500);
   }
 
   onMount(async () => {
@@ -86,9 +96,9 @@
     </div>
 
     <div class="actions">
-      <button class="export" onclick={downloadJspf}>Download JSPF</button>
-      <button class="export" onclick={downloadCsv}>Download CSV</button>
-      <button class="clear" onclick={clearPlaylist}>Clear</button>
+      <button class="export" onclick={downloadJspf}>JSPF</button>
+      <button class="export" onclick={downloadCsv}>CSV</button>
+      <button class="copy" onclick={copyJson}>{copyLabel}</button>
     </div>
   {:else}
     <div class="center">
@@ -204,15 +214,13 @@
     background: #2563eb;
   }
 
-  .clear {
-    background: transparent;
-    border: 1px solid rgba(128, 128, 128, 0.3) !important;
-    flex: 0 !important;
-    white-space: nowrap;
+  .copy {
+    background: #7c3aed;
+    color: white;
   }
 
-  .clear:hover {
-    background: rgba(128, 128, 128, 0.1);
+  .copy:hover {
+    background: #6d28d9;
   }
 
   .instructions {
