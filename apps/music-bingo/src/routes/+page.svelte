@@ -89,7 +89,8 @@
 
 <PrintLayout>
 	{#snippet screen()}
-		<div class="grid min-h-screen grid-cols-1 gap-6 p-6 md:grid-cols-[320px_1fr]">
+		<div class="flex min-h-screen flex-col">
+		<div class="grid flex-1 grid-cols-1 gap-6 p-6 md:grid-cols-[320px_1fr]">
 			<!-- Sidebar -->
 			<aside class="space-y-6">
 				<h1 class="text-2xl font-bold text-gray-900">Music Bingo</h1>
@@ -276,6 +277,26 @@
 					</div>
 				{/if}
 			</main>
+		</div>
+		<footer class="border-t border-gray-200 bg-gray-50 px-6 py-3 text-center text-xs text-gray-500">
+			<a
+				href="https://chromewebstore.google.com/detail/playlist-exporter/bapphgjdlipcpledcboppjnokpimflng"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="hover:text-gray-700 hover:underline"
+			>
+				Get the Playlist Exporter extension to grab playlists
+			</a>
+			<span class="mx-2">|</span>
+			<a
+				href="https://slipp.cam"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="hover:text-gray-700 hover:underline"
+			>
+				Made in Kitchener, Ontario
+			</a>
+		</footer>
 		</div>
 	{/snippet}
 
