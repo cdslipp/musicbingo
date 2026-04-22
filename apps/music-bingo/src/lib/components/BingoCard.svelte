@@ -1,15 +1,17 @@
 <script lang="ts">
-	import type { BingoCard } from '../types.js';
+	import type { BingoCard, Song } from '../types.js';
 	import BingoCell from './BingoCell.svelte';
 
 	let {
 		card,
 		baseFontSize = 16,
-		fontFamily = 'sans-serif'
+		fontFamily = 'sans-serif',
+		oneditcell
 	}: {
 		card: BingoCard;
 		baseFontSize: number;
 		fontFamily: string;
+		oneditcell?: (song: Song, title: string, artist: string | undefined) => void;
 	} = $props();
 </script>
 
@@ -21,6 +23,7 @@
 			fontSize={cell.fontSize}
 			{baseFontSize}
 			{fontFamily}
+			onedit={oneditcell && cell.song ? (title, artist) => oneditcell!(cell.song!, title, artist) : undefined}
 		/>
 	{/each}
 </div>

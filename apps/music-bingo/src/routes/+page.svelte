@@ -2,10 +2,12 @@
 	import {
 		gameState,
 		getFontFamily,
+		getHeaderFontFamily,
 		getUniqueSongCount,
 		regenerateCards,
 		callNextSong,
-		getCurrentWinCondition
+		getCurrentWinCondition,
+		updateSong
 	} from '$lib/state/game-state.svelte.js';
 	import BingoCard from '$lib/components/BingoCard.svelte';
 	import CardNavigator from '$lib/components/CardNavigator.svelte';
@@ -44,6 +46,7 @@
 	}
 
 	const fontFamily = $derived(getFontFamily());
+	const headerFontFamily = $derived(getHeaderFontFamily());
 	const songCount = $derived(getUniqueSongCount());
 	const sim = $derived(gameState.simulation);
 	const tournament = $derived(sim?.tournament ?? null);
@@ -172,13 +175,14 @@
 							<p>Upload a CSV file to generate bingo cards</p>
 						</div>
 					{:else}
-						<div class="space-y-4">
-							<h2 class="text-xl font-bold" style="font-family: {fontFamily};">{gameState.bingoTitle}</h2>
+						<div class="space-y-4 pt-4">
+							<h2 class="pb-2 text-2xl font-extrabold" style="font-family: {headerFontFamily};">{gameState.bingoTitle}</h2>
 							<div class="mx-auto max-w-xl">
 								<BingoCard
 									card={gameState.cards[gameState.currentCardIndex]}
 									baseFontSize={gameState.baseFontSize}
 									{fontFamily}
+									oneditcell={updateSong}
 								/>
 							</div>
 							<div class="flex justify-center">
@@ -251,6 +255,7 @@
 			bingoTitle={gameState.bingoTitle}
 			cards={gameState.cards}
 			fontFamily={getFontFamily()}
+			headerFontFamily={getHeaderFontFamily()}
 			baseFontSize={gameState.baseFontSize}
 			printSize={gameState.printSize}
 		/>

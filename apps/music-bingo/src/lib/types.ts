@@ -3,7 +3,7 @@ export interface Song {
 	artist?: string;
 }
 
-export type FontSizeCategory = 'small' | 'medium' | 'large' | 'x-large';
+export type FontSizeCategory = 'xx-small' | 'x-small' | 'small' | 'medium' | 'large' | 'x-large';
 
 export interface BingoCell {
 	song: Song | null; // null for FREE

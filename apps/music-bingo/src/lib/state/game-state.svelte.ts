@@ -14,6 +14,7 @@ import { generateCards } from '../bingo/generate-cards.js';
 import { shuffle } from '../bingo/shuffle.js';
 import { checkBingo } from '../bingo/check-bingo.js';
 import { checkCardUniqueness, type UniquenessResult } from '../bingo/card-uniqueness.js';
+import { getFontSize } from '../bingo/font-sizing.js';
 
 // ── Core state ──
 export const gameState = $state({
@@ -23,6 +24,7 @@ export const gameState = $state({
 	numberOfCards: 50,
 	bingoTitle: 'Music Bingo',
 	selectedFont: 'Sans Serif' as string,
+	selectedHeaderFont: 'Sans Serif' as string,
 	baseFontSize: 16,
 	printSize: 'full' as PrintSize,
 	mode: 'generate' as AppMode,
@@ -38,17 +40,21 @@ export const gameState = $state({
 });
 
 // ── Derived ──
-export function getFontFamily(): string {
-	switch (gameState.selectedFont) {
-		case 'Serif':
-			return 'serif';
-		case 'Sans Serif':
-			return 'sans-serif';
-		case 'Monospace':
-			return '"American Typewriter", Courier, monospace';
-		default:
-			return `"${gameState.selectedFont}", sans-serif`;
+function resolveFontFamily(selected: string): string {
+	switch (selected) {
+		case 'Serif': return 'serif';
+		case 'Sans Serif': return 'sans-serif';
+		case 'Monospace': return '"American Typewriter", Courier, monospace';
+		default: return `"${selected}", sans-serif`;
 	}
+}
+
+export function getFontFamily(): string {
+	return resolveFontFamily(gameState.selectedFont);
+}
+
+export function getHeaderFontFamily(): string {
+	return resolveFontFamily(gameState.selectedHeaderFont);
 }
 
 export function getUniqueSongCount(): number {
@@ -308,4 +314,17 @@ export function autoPlayTournament(): void {
 export function resetSimulation(): void {
 	gameState.simulation = null;
 	gameState.mode = 'generate';
+}
+
+export function updateSong(song: Song, title: string, artist: string | undefined): void {
+	song.title = title;
+	song.artist = artist;
+	// Recompute font sizes for all cells referencing this song
+	for (const card of gameState.cards) {
+		for (const cell of card.cells) {
+			if (cell.song === song) {
+				cell.fontSize = getFontSize(song);
+			}
+		}
+	}
 }
