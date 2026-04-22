@@ -204,16 +204,14 @@
 							<p>Upload a CSV file to generate bingo cards</p>
 						</div>
 					{:else}
-						<div class="space-y-4 pt-4">
+						<div class="mx-auto max-w-xl space-y-4 pt-4">
 							<h2 class="pb-2 text-2xl font-extrabold" style="font-family: {headerFontFamily};">{gameState.bingoTitle}</h2>
-							<div class="mx-auto max-w-xl">
-								<BingoCard
-									card={gameState.cards[gameState.currentCardIndex]}
-									baseFontSize={gameState.baseFontSize}
-									{fontFamily}
-									oneditcell={updateSong}
-								/>
-							</div>
+							<BingoCard
+								card={gameState.cards[gameState.currentCardIndex]}
+								baseFontSize={gameState.baseFontSize}
+								{fontFamily}
+								oneditcell={updateSong}
+							/>
 							<div class="flex justify-center">
 								<CardNavigator />
 							</div>
