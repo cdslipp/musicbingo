@@ -30,7 +30,7 @@
 	const isHalf = $derived(printSize === 'half');
 	const cellSize = $derived(isHalf ? '0.95in' : '1.55in');
 	const cardWidth = $derived(isHalf ? '5in' : '8in');
-	const titleClass = $derived(isHalf ? 'mt-4 mb-3 text-2xl font-extrabold' : 'mt-6 mb-4 text-4xl font-extrabold');
+	const titleClass = $derived(isHalf ? 'mt-4 mb-4 text-3xl font-extrabold' : 'mt-6 mb-6 text-5xl font-extrabold');
 	const fontScale = $derived(isHalf ? 0.65 : 1);
 
 	// For half-size, pair cards two per page

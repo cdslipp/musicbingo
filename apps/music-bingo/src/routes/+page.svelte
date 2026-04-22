@@ -20,6 +20,7 @@
 	import SimulationControls from '$lib/components/SimulationControls.svelte';
 	import SimulationCard from '$lib/components/SimulationCard.svelte';
 	import SongCallList from '$lib/components/SongCallList.svelte';
+	import SongEditTable from '$lib/components/SongEditTable.svelte';
 	import TournamentSummary from '$lib/components/TournamentSummary.svelte';
 	import WinnerBanner from '$lib/components/WinnerBanner.svelte';
 	import { PrintLayout, triggerPrint } from 'pretty-print-browser';
@@ -159,6 +160,34 @@
 							Print Cards
 						</button>
 					{/if}
+				{:else if gameState.mode === 'table'}
+					<div>
+						<label for="bingo-title-table" class="mb-1 block text-sm font-medium text-gray-700">Title</label>
+						<input
+							id="bingo-title-table"
+							type="text"
+							bind:value={gameState.bingoTitle}
+							class="w-full rounded border border-gray-300 px-3 py-2 text-sm"
+						/>
+					</div>
+
+					<div>
+						<label for="num-cards-table" class="mb-1 block text-sm font-medium text-gray-700">Number of Cards</label>
+						<input
+							id="num-cards-table"
+							type="number"
+							bind:value={gameState.numberOfCards}
+							min="1"
+							max="200"
+							class="w-full rounded border border-gray-300 px-3 py-2 text-sm"
+						/>
+					</div>
+
+					{#if songCount > 0}
+						<p class="text-sm text-gray-600">
+							{songCount} songs loaded.
+						</p>
+					{/if}
 				{:else}
 					<SimulationControls />
 					{#if sim}
@@ -190,6 +219,8 @@
 							</div>
 						</div>
 					{/if}
+				{:else if gameState.mode === 'table'}
+					<SongEditTable />
 				{:else if sim}
 					<div class="space-y-4">
 						{#if tournament && tournament.roundResults.length > 0}

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { FontSizeCategory, Song } from '../types.js';
 	import { stripFeaturing } from '../bingo/font-sizing.js';
+	import SongEditModal from './SongEditModal.svelte';
 
 	let {
 		song = null,
@@ -43,28 +44,19 @@
 	);
 
 	let editing = $state(false);
-	let editValue = $state('');
 
 	function startEdit() {
 		if (!onedit || isFree || !song) return;
-		editValue = displayText;
 		editing = true;
 	}
 
-	function commitEdit() {
+	function handleSave(title: string, artist: string | undefined) {
 		editing = false;
-		if (!onedit) return;
-		const byIndex = editValue.lastIndexOf(' by ');
-		if (byIndex !== -1) {
-			onedit(editValue.slice(0, byIndex).trim(), editValue.slice(byIndex + 4).trim() || undefined);
-		} else {
-			onedit(editValue.trim(), undefined);
-		}
+		onedit?.(title, artist);
 	}
 
-	function handleKeydown(e: KeyboardEvent) {
-		if (e.key === 'Enter') commitEdit();
-		if (e.key === 'Escape') editing = false;
+	function handleCancel() {
+		editing = false;
 	}
 </script>
 
@@ -80,16 +72,7 @@
 	tabindex={onedit && !isFree ? 0 : undefined}
 	onkeydown={onedit && !isFree ? (e) => { if (e.key === 'Enter') startEdit(); } : undefined}
 >
-	{#if editing}
-		<input
-			class="w-full rounded border border-blue-400 px-1 text-center text-xs leading-tight"
-			style="font-family: {fontFamily};"
-			bind:value={editValue}
-			onblur={commitEdit}
-			onkeydown={handleKeydown}
-			autofocus
-		/>
-	{:else}
-		<span class="text-center leading-tight" style="overflow-wrap: anywhere;">{displayText}</span>
-	{/if}
+	<span class="text-center leading-tight" style="overflow-wrap: anywhere;">{displayText}</span>
 </div>
+
+<SongEditModal song={editing ? song : null} onSave={handleSave} onCancel={handleCancel} />
